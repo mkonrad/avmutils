@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "avmutils"
+version = "0.1.0"
+description = "A library for automating the deployment of virtual machines."
+authors = ["Michael Konrad <mkonrad@raknod.net>"]
+license = "GNU Affero General Public License"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "2.26.0"
+certifi = "2021.10.8"
+charset-normalizer = "2.0.6"
+idna = "3.2"
+pycdlib = "1.12.0"
+PyYAML = "5.4.1"
+urllib3 = "1.26.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

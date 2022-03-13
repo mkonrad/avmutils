@@ -1,0 +1,16 @@
+.DS_Store
+*.swp
+__pycache__/
+.DS_Store
+*.swp
+build/
+develop-eggs/
+dist/
+sdist/
+wheels/
+*.egg-info/
+
+.nox
+.pytest_cache/
+
+venv/

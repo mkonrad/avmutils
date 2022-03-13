@@ -1,0 +1,105 @@
+---
+app:
+  name: 'avium'
+  version: '0.0.1'
+  configured: False
+  dnsmasq: 
+    enabled: True
+    user: 'nobody'
+    group: 'nobody' 
+    bin_path: '/usr/local/sbin/dnsmasq'
+    etc_path: '/usr/local/etc/dnsmasq.d'
+    log_path: '/usr/local/var/log/dnsmasq'
+    resolver_path: '/etc/resolver'
+    avium_dns: 'aviumdns.conf'
+    avium_resolv: 'aviumresolv.conf'
+    mdns_resolver: 'avium.test'
+    sudo_priv: 'dnsmasq.priv'
+    configured: False
+  fs:
+    home: ''
+    home_wd: '.avium'
+    sub_wd: 
+      - 'vbox_guest'
+      - 'centos'
+      - 'dhcp'
+      - 'db'
+      - 'iso'
+  xterm:
+    enabled: True
+    bin_path: '/opt/X11/bin/xterm'
+  git:
+      bin_path: '/bin/git'
+user:
+  fullname: 'Michael Konrad'
+  username: 'mkonrad'
+  password: 'P2ssW0rd45'
+  public_key: 'devrole_ed25519.pub'
+  vim_plug_url: 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  pymode_url: 'https://github.com/python-mode/python-mode'
+  bash_support_url: 'https://github.com/vim-scripts/bash-support.vim.git'
+  vimrc: "set background=dark\ncolorscheme gruvbox\nset number\nset ruler\nfiletype plugin indent on\nsyntax enable\n\ncall plug#begin(~/.vim/plugged')\n\nPlug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }\nPlug 'vim-script/bash-support.vim'\nPlug 'morhertz/gruvbox'\n\ncall plug#end()\n"
+  bash_aliases: "alias xtc=/bin/xfce4-terminal\nalias dk=\"/usr/bin/sudo -u graag /usr/bin/docker\""
+iso:
+  distro: 'centos_7'
+  required: True
+  local_path: ''
+centos_7:
+  kickstart: 'vbox_cos7_template.cfg'
+  iso_url: 'https://mirror.wdc1.us.leaseweb.net/centos/7.9.2009/isos/x86_64/'
+  iso_file: 'CentOS-7-x86_64-Minimal-2009.iso'
+  checksum_file: 'sha256sum.txt'
+  local_path: ''
+  custom_iso: 'centos7_ks.iso'
+centos_8:
+  kickstart: 'vbox_cos8_template.cfg'
+  iso_url: 'https://mirror.wdc1.us.leaseweb.net/centos/8.4.2105/isos/x86_64/'
+  iso_file: 'CentOS-8.4.2105-x86_64-boot.iso'
+  checksum_file: 'CHECKSUM'
+  local_path: ''
+  custom_iso: 'centos8_ks.iso'
+virtualbox:
+  enabled: True
+  iso_url: 'https://download.virtualbox.org/virtualbox/'
+  ga_iso_file: 'VBoxGuestAdditions_'
+  ga_checksum_file: 'SHA256SUMS'
+  local_path: ''
+vm:
+  record: 'vm_info.yaml'
+  hostname: 'random'
+  dns_domain: '.avium.test'
+  node_type: 'managed'
+  purpose: 'local dev'
+  ostype: 'RedHat_64'
+  ram: 8192
+  vram: 16
+  cpu: 2
+  hd_size: 50000
+  frontend: 'headless'
+  nic1: 'hostonly'
+  nic2: 'nat'
+  hostonlynet: 'vboxnet0'
+  host_share: '/Users/mkonrad/Software'
+  guest_share: '/mnt/shared'
+kickstart:
+  username_key: 'template_username'
+  fullname_key: 'template_fullname'
+  disk_use_key: '--only-use=sda'
+  disk_use_value: '--only-use=sda,sdb'
+  disk_part_key: 'clearpart --drives=sda'
+  disk_part_value: 'clearpart --drives=sda,sdb'
+  disk_add_key: '# Additional disk partitioning'
+  disk_add_value: '# Additional disk partitioning\npart pv.02 --size 48000 --fstype="lvmpv" --grow --ondisk=sdb\nvolgroup datavg pv.02\nlogvol /var/lib/docker --size 47000 --fstype="xfs" --label="docker" --name=var_lib_docker --vgname=datavg'
+  package_key: 'yum_staging_line'
+  package_none: ''
+  package_admin: 'ipa-server ansible'
+  package_managed: 'ipa-client docker-ce docker-ce-cli container.io kubectl kubeadm kubelet'
+isolinux:
+  timeout_key: 'timeout 600'
+  timeout_value: 'timeout 20'
+  menu_key: 'menu default'
+  menu_value: '#menu default'
+  label_key: 'label linux'
+  label_7_value: 'label kickstart\n  menu label ^Kickstart CentOS 7\n  menu default\n  kernel vmlinuz\n  append initrd=initrd.img inst.stage2=hd:LABEL=CentOS\\x207\\x20x86_64 inst.ks=hd:LABEL=CentOS\\x207\\x20x86_64:/ks.cfg inst.cmdline\n\nlabel linux'
+label_8_value: 'label kickstart\n  menu label ^Kickstart CentOS 8\n  menu default\n  kernel vmlinuz\n  append initrd=initrd.img inst.stage2=hd:LABEL=CentOS\\x208\\x20x86_64 inst.ks=hd:LABEL=CentOS\\x208\\x20x86_64:/ks.cfg inst.cmdline\n\nlabel linux'
+...
